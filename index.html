@@ -98,6 +98,55 @@
             from { opacity: 0; transform: translateY(-10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Quotes Bubble */
+        .quote-box {
+            position: relative;
+            margin: 20px auto;
+            padding: 15px;
+            width: 80%;
+            max-width: 300px;
+            border-radius: 15px;
+            background: rgba(0, 0, 0, 0.6);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            display: none;
+            animation: fadeInOut 3s ease-in-out;
+        }
+
+        /* Animasi Fade In Out */
+        @keyframes fadeInOut {
+            0% { opacity: 0; transform: scale(0.8); }
+            20% { opacity: 1; transform: scale(1); }
+            80% { opacity: 1; transform: scale(1); }
+            100% { opacity: 0; transform: scale(0.8); }
+        }
+
+        /* Typing Effect */
+        .quote-text {
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            min-height: 30px;
+            text-align: center;
+            white-space: pre-line;
+        }
+
+        /* Tombol Quotes */
+        .quote-btn {
+            background: #6a5acd;
+            color: white;
+            padding: 12px;
+            border-radius: 10px;
+            border: none;
+            font-size: 14px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .quote-btn:hover {
+            background: #836fff;
+        }
+
     </style>
 </head>
 <body>
@@ -113,6 +162,12 @@
         <a href="https://bkey01.github.io/live/" class="btn">✨ TikTokLive-Chat ✨</a>
         <a href="https://mobile.capcutshare.com/s/Zs8UQj1RL/" class="btn">✨ Edit di CapCut ✨</a>
 
+        <!-- Quotes Button -->
+        <button class="quote-btn" onclick="showQuote()">💬 Quotes</button>
+        <div class="quote-box" id="quoteBox">
+            <p class="quote-text" id="quoteText"></p>
+        </div>
+
         <!-- Sosial Media -->
         <div class="social-links">
             <a href="https://wa.me/+6288262212706" class="icon whatsapp">WhatsApp</a>
@@ -121,5 +176,46 @@
             <a href="https://saweria.co/keysite" class="icon saweria">Saweria</a>
         </div>
     </div>
+
+    <!-- Audio -->
+    <audio id="clickSound" src="click.mp3"></audio>
+
+    <script>
+        const quotes = [
+            "while (falldown) {\nreset()\nrestart()\nrefocus()\n}",
+            "while (fail) {\nlearn()\ngrow()\nrepeat()\n}",
+            "function success() {\ntry()\npersist()\nachieve()\n}",
+            "if (dream) {\nwork()\nachieve()\nrepeat()\n}"
+        ];
+
+        function showQuote() {
+            const quoteBox = document.getElementById("quoteBox");
+            const quoteText = document.getElementById("quoteText");
+            const clickSound = document.getElementById("clickSound");
+
+            clickSound.play(); // Mainkan suara klik
+            quoteBox.style.display = "block";
+
+            let quote = quotes[Math.floor(Math.random() * quotes.length)];
+            quoteText.innerHTML = "";
+            let i = 0;
+            let colors = ["#ffcc00", "#ff6666", "#66ff66", "#66ccff"];
+            let color = colors[Math.floor(Math.random() * colors.length)];
+
+            function typeWriter() {
+                if (i < quote.length) {
+                    quoteText.innerHTML += quote.charAt(i);
+                    quoteText.style.color = color;
+                    i++;
+                    setTimeout(typeWriter, 50);
+                }
+            }
+            typeWriter();
+
+            setTimeout(() => {
+                quoteBox.style.display = "none";
+            }, 10000);
+        }
+    </script>
 </body>
 </html>
